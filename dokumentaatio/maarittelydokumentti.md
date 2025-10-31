@@ -15,7 +15,7 @@ Ohjelma koulutetaan joukolla edestäpäin otettuja mustavalkoisia samankokoisia
 kasvokuvia, jonka jälkeen ohjelma osaa tunnistaa kasvot, jos ne kuuluvat 
 koulutusjoukkoon, tai todeta että kyseessä ovat uudet kasvot.
 
-PCA-algoritmin aikavaativuus on luokkaa `$O(n*p^2+p^3)$`, missä n on 
+PCA-algoritmin aikavaativuus on luokkaa $O(n*p^2+p^3)$, missä n on 
 havaintoaineiston otosten määrä ja p niiden piirteden lukumäärä.
 
 ## Lähteet
