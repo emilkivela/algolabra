@@ -3,25 +3,23 @@ import os
 from PIL import Image
 from .formulas import hotelling_deflation, rayleigh_quotient, power_iteration 
 
-def load_faces(dataset_path):
+def load_dataset_faces(dataset_path):
     data_matrix = []
-    labels = []
     for person_dir in os.listdir(dataset_path):
         for file in os.listdir(os.path.join(dataset_path, person_dir)):
             #print(file)
             img = Image.open(os.path.join(dataset_path, person_dir,file))
-            img_vector = np.array(img).flatten()
+            img_vector = np.array(img, dtype=np.float32).flatten()
             data_matrix.append(img_vector)
-            labels.append(f"Person {person_dir[1:]}")
 
     T_matrix = np.array(data_matrix).T
-    labels = np.array(labels)
 
+    return T_matrix
+
+def calculate_eigenfaces(T_matrix):
     mean = np.mean(T_matrix, axis=1)
     mean = mean[:, np.newaxis]
     A_matrix = T_matrix - mean
-
-    
 
     covariance_matrix = np.dot(A_matrix.T, A_matrix)
     matrix_rank = np.linalg.matrix_rank(covariance_matrix)
@@ -35,10 +33,55 @@ def load_faces(dataset_path):
     
     for i in range(k):
         eigfaces.append(np.dot(A_matrix, eigvectors[i]))
+
+    eigfaces = np.array(eigfaces).T
+
+    return eigfaces, mean
+
+def get_input_weight(dataset_path, mean, eigfaces):
+    test_img, test_label = load_input_face(dataset_path)
+    centered_img = test_img-mean.flatten()
+
+    weight_vector = []
+
+    weight_vector = np.dot(eigfaces.T, centered_img)
+    return weight_vector, test_label
+
+def get_training_weights(dataset_path, eigfaces, mean):
+    labels = []
+    training_weights = []
+    for person_dir in os.listdir(dataset_path):
+        person_weights = []
+        for file in os.listdir(os.path.join(dataset_path, person_dir)):
+            img = Image.open(os.path.join(dataset_path, person_dir,file))
+            img_vector = np.array(img, np.float32).flatten()
+            img_vector -= mean.flatten()
+            w = np.dot(eigfaces.T, img_vector)
+            person_weights.append(w)
+        avg_weight = np.mean(person_weights, axis=0)
+        training_weights.append(avg_weight)
+        labels.append(f"Person {person_dir[1:]}")
     
-    for i in range(len(eigfaces)):
-        build_eigface(eigfaces[i], i)
-        
+    return training_weights, labels
+
+def recognise_input_face(training_weights, weight_vector, test_label, labels):
+
+    smallest_distance = (float("inf"), "class label")
+    for i in range(len(training_weights)):
+        distance = np.linalg.norm(weight_vector-training_weights[i])
+        if distance < smallest_distance[0]:
+            smallest_distance = distance,labels[i]
+    
+    test = f"Guess: {smallest_distance[1]}, True: {test_label}"
+    return test
+
+def load_input_face(img_path):
+    for file in os.listdir(img_path):
+        img = Image.open(os.path.join(img_path, file))
+        img_vector = np.array(img, np.float32).flatten()
+        label = f"Person {os.path.basename(img_path)[1:]}"
+    return img_vector, label
+
 
 
     
