@@ -10,3 +10,5 @@ Ongelmia tällä viikolla tuotti eritoten ominaisarvojen ja -vektorien laskemine
 
 Tulevilla viikoilla rakennan ohjelmalle käyttöliittymän ja kirjoitan enemmän ja kattavampia testejä sekä mahdollisesti refaktoroin olemassa olevaa koodia. 
 
+Käytin harjoitustyöhön tällä viikolla 15 tuntia.
+
