@@ -73,7 +73,7 @@ def recognise_input_face(training_weights, weight_vector, test_label, labels):
             smallest_distance = distance,labels[i]
     
     test = f"Guess: {smallest_distance[1]}, True: {test_label}"
-    return test
+    return test, smallest_distance[0]
 
 def load_input_face(img_path):
     for file in os.listdir(img_path):
