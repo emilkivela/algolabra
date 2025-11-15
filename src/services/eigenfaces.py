@@ -76,10 +76,9 @@ def recognise_input_face(training_weights, weight_vector, test_label, labels):
     return test, smallest_distance[0]
 
 def load_input_face(img_path):
-    for file in os.listdir(img_path):
-        img = Image.open(os.path.join(img_path, file))
-        img_vector = np.array(img, np.float32).flatten()
-        label = f"Person {os.path.basename(img_path)[1:]}"
+    img = Image.open(img_path)
+    img_vector = np.array(img, np.float32).flatten()
+    label = f"Person {os.path.basename(img_path)[1:]}"
     return img_vector, label
 
 
