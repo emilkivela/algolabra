@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width">
+        <title>Kasvojentunnistusohjelma</title>
+    </head>
+    <body>
+        <h2>True label: '{{ true_label }}'</h2>
+        <h2>Guess: '{{ guess }}'</h2>
+        <h2>Distance: '{{ distance }}'</h2>
+        <h2>Input image: </h2>
+        <img src="data:image/png;base64,{{ input_image }}">
+        <h2>Guess images: </h2>
+        {% for image in guesspics %}
+        <img src="data:image/png;base64,{{ image }}">
+        {% endfor %}
+    </body>
+</html>
