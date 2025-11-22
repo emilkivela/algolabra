@@ -34,8 +34,8 @@ def recognise_face():
         converted = convert_pmg(path+img)
         guess_pictures.append(converted["base64"])
     input_image = convert_pmg(input_face_path)
-    return render_template("guess.html", guess=guess[1], distance=guess[0], 
-                                         input_image=input_image["base64"], true_label=file, guesspics= guess_pictures)
+    return render_template("guess.html", guess=guess[1][1:], distance=guess[0], 
+                                         input_image=input_image["base64"], true_label=file[1:-4], guesspics= guess_pictures)
 
 @app.route("/mean")
 def mean_face():

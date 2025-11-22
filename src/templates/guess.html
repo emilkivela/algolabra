@@ -1,19 +1,24 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width">
-        <title>Kasvojentunnistusohjelma</title>
-    </head>
-    <body>
-        <h2>True label: '{{ true_label }}'</h2>
-        <h2>Guess: '{{ guess }}'</h2>
-        <h2>Distance: '{{ distance }}'</h2>
-        <h2>Input image: </h2>
-        <img src="data:image/png;base64,{{ input_image }}">
-        <h2>Guess images: </h2>
-        {% for image in guesspics %}
-        <img src="data:image/png;base64,{{ image }}">
-        {% endfor %}
-    </body>
-</html>
+{% extends "layout.html" %}
+{% block title%}Tunnistus{% endblock %}
+
+{% block content %}
+<div class="text-center">
+<h2 class="text-center">Oikea vastaus: Henkilö {{ true_label }}</h2>
+<h2>Ohjelman arvaus: Henkilö {{ guess }}</h2>
+<h2>Etäisyys: {{ distance }}</h2>
+<h2>Syötekuva: </h2>
+</div>
+<div class="card" style="max-width: 150px; margin: auto;">
+<img src="data:image/png;base64,{{ input_image }}" class="card-img-top">
+</div>
+<h2>Harjoituskuvat: </h2>
+<div class="row g-3 mt-3">
+    {% for image in guesspics %}
+    <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+        <div class="card text-center" style="max-width: 150px; margin: auto;">
+            <img src="data:image/png;base64,{{ image }}" class="card-img-top">
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

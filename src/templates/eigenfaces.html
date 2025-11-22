@@ -1,11 +1,13 @@
 {% extends "layout.html" %}
+{% block title%}Ominaiskasvot{% endblock %}
 {% block content %}
 <h1 class="text-center">Ominaiskasvot</h1>
 <p class="text-center">Kasvodatasta lasketut ominaiskasvot</p>
 <div class="row g-3 mt-3">
     {% for face in eigenfaces %}
     <div class="col-6 col-sm-4 col-md-3 col-lg-2">
-        <div class="card text-center" style="max-width: 150px; margin: auto;">
+        <div class="card text-center" style="max-width: 150
+        px; margin: auto;">
             <img src="{{ face }}" class="card-img-top">
         </div>  
     </div>
