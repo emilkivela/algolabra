@@ -20,10 +20,16 @@ for file in os.listdir('./static/images/inputs/'):
 
 @app.route("/")
 def index():
+    """
+    Metodi, joka palauttaa ohjelman etusivun.
+    """
     return render_template("index.html", face_files = input_files)
 
 @app.route("/recognise", methods=["POST"])
 def recognise_face():
+    """
+    Metodi, joka näyttää syötekuvan ja keneksi ohjelma sen tunnisti. Näyttää myös kaikki harjoitusdatan kuvat arvatusta henkilöstä.
+    """
     file = request.form["faces"]
     input_face_path = "./static/images/inputs/"+file
     weight_vector, test_label = get_input_weight(input_face_path, mean, eigenfaces)
@@ -39,10 +45,16 @@ def recognise_face():
 
 @app.route("/mean")
 def mean_face():
+    """
+    Metodi, joka palauttaa sivun jossa näytetään kuvamatriisin keskiarvovektorista rakennettu kuva.
+    """
     return render_template("mean.html")
 
 @app.route("/eigenfaces")
 def eigenface():
+    """
+    Metodi, joka palauttaa sivun jossa näytetään kaikki lasketut ominaiskasvot kuvina.
+    """
     eigenfaces = []
     for eigface in os.listdir('./static/images/eigenfaces/'):
         eigenfaces.append('/static/images/eigenfaces/'+eigface)
