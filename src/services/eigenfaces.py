@@ -75,7 +75,7 @@ def get_training_weights(dataset_path, eigfaces, mean):
     
     return training_weights, labels
 
-def recognise_input_face(training_weights, weight_vector, test_label, labels):
+def recognise_input_face(training_weights, weight_vector, labels):
     """
     Laskee pienimmän Euklidisen etäisyyden syötekuvan ja harjoituskuvien painovektorien välillä, ja luokittelee kasvot sen mukaan.
     """
@@ -90,9 +90,15 @@ def load_input_face(img_path):
     """
     Muuntaa syötekuvan kuvavektoriksi ja antaa sille nimen.
     """
-    img = Image.open(img_path)
-    img_vector = np.array(img, np.float32).flatten()
-    label = f"Person {os.path.basename(img_path)[1:]}"
+    if isinstance(img_path, str):
+        img = Image.open(img_path)
+        img_vector = np.array(img, np.float32).flatten()
+        label = f"{os.path.basename(img_path)[1:-4]}"
+    else:
+        img = Image.open(img_path.stream)
+        img_vector = np.array(img, np.float32).flatten()
+        label = f"{img_path.filename}"
+
     return img_vector, label
 
 

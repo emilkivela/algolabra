@@ -4,8 +4,13 @@ import os
 from PIL import Image
 
 def convert_pmg(image_path):
-    img = Image.open(image_path)
-    file_name = os.path.basename(image_path)
+    if isinstance(image_path, str):
+        img = Image.open(image_path)
+        file_name = os.path.basename(image_path)
+    else:
+        img = Image.open(image_path.stream)
+        file_name = image_path.filename
+
     buffer = io.BytesIO()
     img.save(buffer, format="PNG")
     encoded = base64.b64encode(buffer.getvalue()).decode("utf-8")

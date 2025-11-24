@@ -21,4 +21,13 @@
     </div>
     {% endfor %}
 </div>
+<div class="text-center" style="margin-top: 50px">
+<h2 >Syötä tunnistettava kuva:</h2>
+    <form action="/recognise" method="POST" enctype="multipart/form-data">
+        <div class="row d-flex justify-content-center">
+            <input type="file" name="upload" class="form-control" style="width: 25%;">
+        </div>
+        <input type="submit" value="Upload" class="btn btn-sm btn-secondary">
+    </form>
+</div>
 {% endblock %}
