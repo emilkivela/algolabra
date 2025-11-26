@@ -8,7 +8,8 @@ def convert_pmg(image_path):
         img = Image.open(image_path)
         file_name = os.path.basename(image_path)
     else:
-        img = Image.open(image_path.stream)
+        img = Image.open(image_path.stream).convert('L')
+        img = img.resize((92, 112))
         file_name = image_path.filename
 
     buffer = io.BytesIO()

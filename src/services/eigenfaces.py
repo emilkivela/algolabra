@@ -48,7 +48,7 @@ def get_input_weight(dataset_path, mean, eigfaces):
     Laskee painovektorin kuvalle, joka on tarkoitus tunnistaa.
     """
     test_img, test_label = load_input_face(dataset_path)
-    centered_img = test_img-mean.flatten()
+    centered_img = test_img - mean.flatten()
 
     weight_vector = []
 
@@ -95,7 +95,9 @@ def load_input_face(img_path):
         img_vector = np.array(img, np.float32).flatten()
         label = f"{os.path.basename(img_path)[1:-4]}"
     else:
-        img = Image.open(img_path.stream)
+        img = Image.open(img_path.stream).convert('L')
+        img = img.resize((92, 112))
+        print("KOKO!!!:", np.shape(img))
         img_vector = np.array(img, np.float32).flatten()
         label = f"{img_path.filename}"
 
