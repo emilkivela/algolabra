@@ -19,3 +19,12 @@ Valitsemme k tärkeintä pääkomponenttia (= ominaiskasvoa) päättämällä jo
 Kokonaisvarianssi $v = (λ_1 + λ_2 + ... + λ_n)$, missä n = kaikkien komponenttien määrä ja λ on komponentin ominaisarvo. K on pienin luku jolle pätee $((λ_1 + λ_2 + ... + λ_k) / v) > ε$
 
 Talletamme tällä tavalla saadut ominaiskasvot matriisiin, ja power iteration-algoritmin ansiosta ne ovat valmiiksi suuruusjärjestyksessä ominaisarvon mukaan. Ominaiskasvojen avulla laskemme jokaiselle harjoitusdatasta löytyvälle henkilölle oman painovektorin laskemalla keskiarvon jokaisen henkilön kuvan painovektorin keskiarvon. Ohjelma tunnistaa ihmisen laskemalla syötekuvalle myös painovektorin ja laskemalla minkä henkilön painovektoriin on pienin Euklidinen etäisyys.
+
+## Viitteet
+- [Turk and Pentland, Eigenfaces for Recognition](https://direct.mit.edu/jocn/article/3/1/71/3025/Eigenfaces-for-Recognition)
+- [Eigenface (Wikipedia)](https://en.wikipedia.org/wiki/Eigenface)
+- [Geek for Geeks Eigenface](https://www.geeksforgeeks.org/machine-learning/ml-face-recognition-using-eigenfaces-pca-algorithm/)
+- [Power iteration (Wikipedia)](https://en.wikipedia.org/wiki/Power_iteration)
+- [Rayleigh quotient (Wikipedia)](ps://en.wikipedia.org/wiki/Rayleigh_quotient)
+- [Computation of matrix eigenvalues and eigenvectors, Oxford lecture slides](https://www.robots.ox.ac.uk/~sjrob/Teaching/EngComp/ecl4.pdf)
+- 
