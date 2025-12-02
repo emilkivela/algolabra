@@ -1,11 +1,9 @@
 import os
 import time
 from flask import Flask, render_template, request
-from src.services.helper import convert_pmg
-from src.services.eigenfaces import (
-    load_dataset_faces, calculate_eigenfaces, 
-    get_input_weight, get_training_weights, recognise_input_face
-)
+from src.services.utils import convert_pmg, load_dataset_faces
+from src.services.eigenfaces import (calculate_eigenfaces, get_input_weight, 
+                                     get_training_weights, recognise_input_face)
 
 app = Flask(__name__)
 

@@ -2,21 +2,8 @@ import numpy as np
 import os
 from PIL import Image
 from .formulas import hotelling_deflation, rayleigh_quotient, power_iteration 
+from .utils import load_input_face
 
-def load_dataset_faces(dataset_path):
-    """
-    Muuntaa harjoitussetin kuvat vektoreiksi ja tallettaa ne matriisiin, niin että jokainen sarake on yksi kuvavektori.
-    """
-    data_matrix = []
-    for person_dir in os.listdir(dataset_path):
-        for file in os.listdir(os.path.join(dataset_path, person_dir)):
-            img = Image.open(os.path.join(dataset_path, person_dir,file))
-            img_vector = np.array(img, dtype=np.float32).flatten()
-            data_matrix.append(img_vector)
-
-    T_matrix = np.array(data_matrix).T
-
-    return T_matrix
 
 def calculate_eigenfaces(T_matrix):
     """
@@ -35,7 +22,7 @@ def calculate_eigenfaces(T_matrix):
         k += 1
 
     eigfaces = []
-    
+
     for i in range(k):
         eigfaces.append(np.dot(A_matrix, eigvectors[i]))
 
@@ -86,23 +73,6 @@ def recognise_input_face(training_weights, weight_vector, labels):
             smallest_distance = distance,labels[i]
     return smallest_distance
 
-def load_input_face(img_path):
-    """
-    Muuntaa syötekuvan kuvavektoriksi ja antaa sille nimen.
-    """
-    if isinstance(img_path, str):
-        img = Image.open(img_path)
-        img_vector = np.array(img, np.float32).flatten()
-        label = f"{os.path.basename(img_path)[1:-4]}"
-    else:
-        img = Image.open(img_path.stream).convert('L')
-        img = img.resize((92, 112))
-        print("KOKO!!!:", np.shape(img))
-        img_vector = np.array(img, np.float32).flatten()
-        label = f"{img_path.filename}"
-
-    return img_vector, label
-
 
 def get_eigs(C, k):
     """
@@ -118,26 +88,3 @@ def get_eigs(C, k):
         C = hotelling_deflation(C, eigvalue, eigvector)
     return eigs, vectors
 
-def get_mean_face(mean_vector):
-    """
-    Luo kuvamatriisin keskiarvovektorista kuvan harjoitussetin kasvojen keskiarvoisesta kasvosta.
-    """
-    mean_image = mean_vector.reshape((112,92))
-    mean_image_norm = (mean_image - mean_image.min()) / (mean_image.max() - mean_image.min())
-    mean_image_uint8 = (mean_image_norm * 255).astype(np.uint8)
-
-    face_img = Image.fromarray(mean_image_uint8, mode='L')
-    face_img.show()
-    face_img.save("../static/images/mean_face_image.png")
-
-def build_eigface(eigvector, name):
-    """
-    Muuntaa lasketut ominaisvektorit kuviksi, eli ominaiskasvoiksi.
-    """
-    eigvector = eigvector.reshape((112, 92))
-    eigvector = eigvector - np.min(eigvector)
-    eigvector = eigvector / np.max(eigvector)
-    img = (eigvector * 255).astype(np.uint8)
-
-    eigenface = Image.fromarray(img, mode='L')
-    eigenface.save(f"./static/images/eigenfaces/eigenface{name}.png")
