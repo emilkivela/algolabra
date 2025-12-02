@@ -1,7 +1,8 @@
 import os
 import time
+import numpy as np
 from flask import Flask, render_template, request
-from src.services.utils import convert_pmg, load_dataset_faces
+from src.services.utils import convert_pmg, load_dataset_faces, calculate_treshold
 from src.services.eigenfaces import (calculate_eigenfaces, get_input_weight, 
                                      get_training_weights, recognise_input_face)
 
@@ -13,6 +14,8 @@ faceloadtime = time.time()
 eigenfaces, mean = calculate_eigenfaces(T_matrix)
 eigtime = time.time()
 training_weights, labels = get_training_weights('./static/images/data/', eigenfaces, mean)
+treshold = calculate_treshold(training_weights, labels, eigenfaces, mean)
+print(np.shape(training_weights), labels)
 weighttime = time.time()
 
 input_files = []
@@ -51,7 +54,10 @@ def recognise_face():
 
     weight_vector, true_label = get_input_weight(input_face_path, mean, eigenfaces)
     guess = recognise_input_face(training_weights, weight_vector, labels)
-    
+
+    if guess[0] > treshold:
+        return render_template("not_recognised.html", input_image=input_image, true_label=true_label)
+
     guess_pictures = []
     path = './static/images/data/'+guess[1]+'/'
     for img in os.listdir(path):

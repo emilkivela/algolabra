@@ -3,6 +3,7 @@ import base64
 import os
 import numpy as np
 from PIL import Image
+from .eigenfaces import get_input_weight
 
 def load_dataset_faces(dataset_path):
     """
@@ -19,21 +20,6 @@ def load_dataset_faces(dataset_path):
 
     return T_matrix
 
-def load_input_face(img_path):
-    """
-    Muuntaa syötekuvan kuvavektoriksi ja antaa sille nimen.
-    """
-    if isinstance(img_path, str):
-        img = Image.open(img_path)
-        img_vector = np.array(img, np.float32).flatten()
-        label = f"{os.path.basename(img_path)[1:-4]}"
-    else:
-        img = Image.open(img_path.stream).convert('L')
-        img = img.resize((92, 112))
-        img_vector = np.array(img, np.float32).flatten()
-        label = f"{img_path.filename}"
-
-    return img_vector, label
 
 
 def convert_pmg(image_path):
@@ -74,3 +60,17 @@ def build_eigface(eigvector, name):
 
     eigenface = Image.fromarray(img, mode='L')
     eigenface.save(f"./static/images/eigenfaces/eigenface{name}.png")
+
+def calculate_treshold(training_weigths, labels, eigenfaces, mean):
+    close_distances = []
+    for person_dir in os.listdir('./static/images/data/'):
+        idx = labels.index(person_dir)
+        person_weight = training_weigths[idx]
+        for file in os.listdir(os.path.join('./static/images/data/', person_dir)):
+            input_weight = get_input_weight(os.path.join('./static/images/data/', person_dir, file), mean, eigenfaces)[0]
+            dist = np.linalg.norm(input_weight-person_weight)
+            close_distances.append(dist)
+    weight_mean = np.mean(close_distances)
+    weigth_std = np.std(close_distances)
+    treshold = weight_mean + 2*weigth_std
+    return treshold

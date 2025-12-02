@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+{% block content %}
+<h1 class="text-center">Kuvaa ei tunnistettu</h1>
+<p class="text-center">Ohjelma ei tunnistanut että syötetty kuva olisi kukaan harjoitusdatan henkilöistä</p>
+<div class="card" style="max-width: 300px; margin: auto;">
+    <img src="data:image/png;base64,{{ input_image }}" class="card-img-top">
+    <div class="card-body">{{ true_label }}</div>
+</div>
+{% endblock %}

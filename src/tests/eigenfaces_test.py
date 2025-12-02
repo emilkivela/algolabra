@@ -12,5 +12,10 @@ def test_get_eigs_finds_correct_values():
     assert np.allclose(test_eigvectors, eigvecs_sorted, atol=1e-02)
     assert np.allclose(test_eigvals, eigvals_sorted)
 
+def test_calculate_eigenfaces_returns_correct_shapes():
+    
+    return
+
+
 
 

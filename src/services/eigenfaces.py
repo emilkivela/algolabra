@@ -2,7 +2,7 @@ import numpy as np
 import os
 from PIL import Image
 from .formulas import hotelling_deflation, rayleigh_quotient, power_iteration 
-from .utils import load_input_face
+#from .utils import load_input_face
 
 
 def calculate_eigenfaces(T_matrix):
@@ -87,4 +87,21 @@ def get_eigs(C, k):
         vectors.append(eigvector)
         C = hotelling_deflation(C, eigvalue, eigvector)
     return eigs, vectors
+
+
+def load_input_face(img_path):
+    """
+    Muuntaa syötekuvan kuvavektoriksi ja antaa sille nimen.
+    """
+    if isinstance(img_path, str):
+        img = Image.open(img_path)
+        img_vector = np.array(img, np.float32).flatten()
+        label = f"{os.path.basename(img_path)[1:-4]}"
+    else:
+        img = Image.open(img_path.stream).convert('L')
+        img = img.resize((92, 112))
+        img_vector = np.array(img, np.float32).flatten()
+        label = f"{img_path.filename}"
+
+    return img_vector, label
 
