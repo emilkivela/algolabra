@@ -2,7 +2,6 @@ import numpy as np
 import os
 from PIL import Image
 from .formulas import hotelling_deflation, rayleigh_quotient, power_iteration 
-#from .utils import load_input_face
 
 
 def calculate_eigenfaces(T_matrix):
