@@ -3,6 +3,7 @@
 Tämä on harjoitustyö joka on tehty Helsingin yliopiston kurssille Algoritmit ja tekoäly. Kyseessä on ominaiskasvoja (Eigenface) hyödyntävä kasvojentunnistusohjelma
 
 ## Dokumentaatio
+[Käyttöohje](https://github.com/emilkivela/algolabra/blob/master/dokumentaatio/kayttoohje.md)
 [Määrittelydokumentti](https://github.com/emilkivela/algolabra/blob/master/dokumentaatio/maarittelydokumentti.md)
 [Toteutusdokumentti](https://github.com/emilkivela/algolabra/blob/master/dokumentaatio/toteutusdokumentti.md)
 
@@ -11,8 +12,5 @@ Tämä on harjoitustyö joka on tehty Helsingin yliopiston kurssille Algoritmit 
 - [Viikkoraportti 2](https://github.com/emilkivela/algolabra/blob/master/dokumentaatio/viikkoraportit/viikkoraportti2.md)
 - [Viikkoraportti 3](https://github.com/emilkivela/algolabra/blob/master/dokumentaatio/viikkoraportit/viikkoraportti3.md)
 - [Viikkoraportti 4](https://github.com/emilkivela/algolabra/blob/master/dokumentaatio/viikkoraportit/viikkoraportti4.md)
-
-## Käyttöohjeet
-1. Asenna riippuvuudet komennolla ``` poetry install ```
-2. Käynnistä ohjelma komennolla ``` poetry run invoke start ```
-3. Odota että Flask-serveri on pystyssä, ja mene sitten osoitteeseen ``` localhost:5000 ```
+- [Viikkoraportti 5](https://github.com/emilkivela/algolabra/blob/master/dokumentaatio/viikkoraportit/viikkoraportti5.md)
+- [Viikkoraportti 6](https://github.com/emilkivela/algolabra/blob/master/dokumentaatio/viikkoraportit/viikkoraportti6.md)

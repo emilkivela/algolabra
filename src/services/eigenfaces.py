@@ -47,6 +47,7 @@ def get_training_weights(dataset_path, eigfaces, mean):
     """
     labels = []
     training_weights = []
+
     for person_dir in os.listdir(dataset_path):
         person_weights = []
         for file in os.listdir(os.path.join(dataset_path, person_dir)):
@@ -55,6 +56,7 @@ def get_training_weights(dataset_path, eigfaces, mean):
             img_vector -= mean.flatten()
             w = np.dot(eigfaces.T, img_vector)
             person_weights.append(w)
+
         avg_weight = np.mean(person_weights, axis=0)
         training_weights.append(avg_weight)
         labels.append(person_dir)
@@ -66,12 +68,12 @@ def recognise_input_face(training_weights, weight_vector, labels):
     Laskee pienimmän Euklidisen etäisyyden syötekuvan ja harjoituskuvien painovektorien välillä, ja luokittelee kasvot sen mukaan.
     """
     smallest_distance = (float("inf"), "class label")
+
     for i in range(len(training_weights)):
         distance = np.linalg.norm(weight_vector-training_weights[i])
         if distance < smallest_distance[0]:
             smallest_distance = distance,labels[i]
     return smallest_distance
-
 
 def get_eigs(C, k):
     """
@@ -79,12 +81,14 @@ def get_eigs(C, k):
     """
     eigs = []
     vectors = []
+
     for _ in range(k):
         eigvector = power_iteration(C, 50)
         eigvalue = rayleigh_quotient(eigvector, C)
         eigs.append(eigvalue)
         vectors.append(eigvector)
         C = hotelling_deflation(C, eigvalue, eigvector)
+
     return eigs, vectors
 
 
@@ -96,6 +100,7 @@ def load_input_face(img_path):
         img = Image.open(img_path)
         img_vector = np.array(img, np.float32).flatten()
         label = f"{os.path.basename(img_path)[1:-4]}"
+
     else:
         img = Image.open(img_path.stream).convert('L')
         img = img.resize((92, 112))

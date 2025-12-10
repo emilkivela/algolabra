@@ -9,13 +9,14 @@ from src.services.eigenfaces import (calculate_eigenfaces, get_input_weight,
 app = Flask(__name__)
 
 start = time.time()
+
 T_matrix = load_dataset_faces('./static/images/data/')
 faceloadtime = time.time()
 eigenfaces, mean = calculate_eigenfaces(T_matrix)
 eigtime = time.time()
+
 training_weights, labels = get_training_weights('./static/images/data/', eigenfaces, mean)
 treshold = calculate_treshold(training_weights, labels, eigenfaces, mean)
-print(np.shape(training_weights), labels)
 weighttime = time.time()
 
 input_files = []
@@ -43,11 +44,13 @@ def recognise_face():
     """
     start = time.time()
     error = None
+
     if "upload" in request.files:
         input_face_path = request.files["upload"]
         if input_face_path.content_type[0:5] != "image":
             error = "Syötä vain kuvatiedostoja"
             return render_template("index.html", face_files = input_files, error = error)
+
     elif "faces" in request.form:
         file = request.form["faces"]
         input_face_path = "./static/images/inputs/"+file
@@ -63,6 +66,7 @@ def recognise_face():
 
     guess_pictures = []
     path = './static/images/data/'+guess[1]+'/'
+
     for img in os.listdir(path):
         converted = convert_pmg(path+img)
         guess_pictures.append(converted["base64"])
@@ -86,7 +90,10 @@ def eigenface():
     Metodi, joka palauttaa sivun jossa näytetään kaikki lasketut ominaiskasvot kuvina.
     """
     eigenfaces = []
+
     for eigface in os.listdir('./static/images/eigenfaces/'):
         eigenfaces.append('/static/images/eigenfaces/'+eigface)
+
     eigenfaces = sorted(eigenfaces)
+
     return render_template("eigenfaces.html", eigenfaces=eigenfaces)

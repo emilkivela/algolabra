@@ -20,8 +20,6 @@ def load_dataset_faces(dataset_path):
 
     return T_matrix
 
-
-
 def convert_pmg(image_path):
     """
     Muuntaa syötetyn kuvan base64-muotoon, jotta se voidaan esittää verkkosivulla riippumatta siitä,
@@ -72,6 +70,7 @@ def calculate_treshold(training_weigths, labels, eigenfaces, mean):
      painovektorin ja saman henkilöluokan painovektorin välillä.
     """
     close_distances = []
+
     for person_dir in os.listdir('./static/images/data/'):
         idx = labels.index(person_dir)
         person_weight = training_weigths[idx]
@@ -79,7 +78,9 @@ def calculate_treshold(training_weigths, labels, eigenfaces, mean):
             input_weight = get_input_weight(os.path.join('./static/images/data/', person_dir, file), mean, eigenfaces)[0]
             dist = np.linalg.norm(input_weight-person_weight)
             close_distances.append(dist)
+    
     weight_mean = np.mean(close_distances)
     weigth_std = np.std(close_distances)
-    treshold = weight_mean + 2*weigth_std
+    treshold = weight_mean + 2 * weigth_std
+
     return treshold
