@@ -2,6 +2,11 @@
 {% block title%}Etusivu{% endblock %}
 
 {% block content %}
+{% if error %}
+<div class="alert alert-danger text-center" role="alert">
+    <h5>{{ error }}</h5>
+</div>
+{% endif %}
 <div class="text-center">
     <h1>Kasvojentunnistusohjelma</h1>
     <h2>Tunnista kasvot: </h2>

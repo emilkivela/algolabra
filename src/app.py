@@ -1,7 +1,7 @@
 import os
 import time
 import numpy as np
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, flash, redirect, url_for
 from src.services.utils import convert_pmg, load_dataset_faces, calculate_treshold
 from src.services.eigenfaces import (calculate_eigenfaces, get_input_weight, 
                                      get_training_weights, recognise_input_face)
@@ -34,6 +34,7 @@ def index():
     """
     Metodi, joka palauttaa ohjelman etusivun.
     """
+    #error = None
     return render_template("index.html", face_files = input_files)
 
 @app.route("/recognise", methods=["POST"])
@@ -42,9 +43,12 @@ def recognise_face():
     Metodi, joka näyttää syötekuvan ja keneksi ohjelma sen tunnisti. Näyttää myös kaikki harjoitusdatan kuvat arvatusta henkilöstä.
     """
     start = time.time()
-
+    error = None
     if "upload" in request.files:
         input_face_path = request.files["upload"]
+        if input_face_path.content_type[0:5] != "image":
+            error = "Syötä vain kuvatiedostoja"
+            return render_template("index.html", face_files = input_files, error = error)
     elif "faces" in request.form:
         file = request.form["faces"]
         input_face_path = "./static/images/inputs/"+file
