@@ -23,6 +23,10 @@ def load_dataset_faces(dataset_path):
 
 
 def convert_pmg(image_path):
+    """
+    Muuntaa syötetyn kuvan base64-muotoon, jotta se voidaan esittää verkkosivulla riippumatta siitä,
+    oliko alkuperäinen kuva .pmg-tiedosto vai ei. Tarkistaa alussa onko syöte polku tiedostoon vai FileObject.
+    """
     if isinstance(image_path, str):
         img = Image.open(image_path)
         file_name = os.path.basename(image_path)
@@ -62,6 +66,11 @@ def build_eigface(eigvector, name):
     eigenface.save(f"./static/images/eigenfaces/eigenface{name}.png")
 
 def calculate_treshold(training_weigths, labels, eigenfaces, mean):
+    """
+    Laskee kynnysarvon jota käytetään määrittämään onko syötetty kuva nähty ennen vai ei. Kynnysarvoksi on valittu tässä tapauksessa
+     etäisyyden keskiarvo johon on lisätty keskihajonta kerrottuna kahdella, kun etäisyys lasketaan harjoitussetissä olevan kuvan
+     painovektorin ja saman henkilöluokan painovektorin välillä.
+    """
     close_distances = []
     for person_dir in os.listdir('./static/images/data/'):
         idx = labels.index(person_dir)

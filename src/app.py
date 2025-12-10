@@ -34,7 +34,6 @@ def index():
     """
     Metodi, joka palauttaa ohjelman etusivun.
     """
-    #error = None
     return render_template("index.html", face_files = input_files)
 
 @app.route("/recognise", methods=["POST"])
