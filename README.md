@@ -3,9 +3,10 @@
 Tämä on harjoitustyö joka on tehty Helsingin yliopiston kurssille Algoritmit ja tekoäly. Kyseessä on ominaiskasvoja (Eigenface) hyödyntävä kasvojentunnistusohjelma
 
 ## Dokumentaatio
-[Käyttöohje](https://github.com/emilkivela/algolabra/blob/master/dokumentaatio/kayttoohje.md)
-[Määrittelydokumentti](https://github.com/emilkivela/algolabra/blob/master/dokumentaatio/maarittelydokumentti.md)
-[Toteutusdokumentti](https://github.com/emilkivela/algolabra/blob/master/dokumentaatio/toteutusdokumentti.md)
+- [Käyttöohje](https://github.com/emilkivela/algolabra/blob/master/dokumentaatio/kayttoohje.md)
+- [Määrittelydokumentti](https://github.com/emilkivela/algolabra/blob/master/dokumentaatio/maarittelydokumentti.md)
+- [Toteutusdokumentti](https://github.com/emilkivela/algolabra/blob/master/dokumentaatio/toteutusdokumentti.md)
+- [Testausdokumentti](https://github.com/emilkivela/algolabra/blob/master/dokumentaatio/testausdokumentti.md)
 
 ### Viikkoraportit
 - [Viikkoraportti 1](https://github.com/emilkivela/algolabra/blob/master/dokumentaatio/viikkoraportit/viikkoraportti1.md)
