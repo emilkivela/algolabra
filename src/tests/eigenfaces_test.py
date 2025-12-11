@@ -1,7 +1,6 @@
 from src.services.eigenfaces import (
     get_eigs, get_input_weight, calculate_eigenfaces,
-      recognise_input_face, load_input_face)
-from src.services.utils import load_dataset_faces
+      recognise_input_face, load_input_face, get_training_weights)
 import numpy as np
 from PIL import Image
 import io
@@ -21,21 +20,7 @@ def test_get_eigs_finds_correct_values():
     assert np.allclose(test_eigvectors, eigvecs_sorted, atol=1e-02)
     assert np.allclose(test_eigvals, eigvals_sorted)
 
-def test_load_dataset_faces_returns_correct_shaped_matrix(tmp_path):
-    testperson = tmp_path / "person1"
-    testperson.mkdir()
-
-    image1 = Image.fromarray(np.ones((5,5), dtype=np.uint8))
-    image2 = Image.fromarray(np.full((5,5), 2, dtype=np.uint8))
-
-    image1.save(testperson / "1.pgm")
-    image2.save(testperson / "2.pgm")
-
-    t_matrix = load_dataset_faces(tmp_path)
-
-    assert t_matrix.shape == (25,2)
-
-def test_get_input_weight_basic(monkeypatch):
+def test_get_input_weight_calculates_correctly(monkeypatch):
     test_img = np.array([1, 2, 3, 4], dtype=np.float32)
 
     mean = np.zeros((4, 1), dtype=np.float32)
@@ -114,11 +99,50 @@ def test_load_input_face_fileobject():
 
     image_vector, label = load_input_face(filestorage)
 
-    assert image_vector.shape == (92 * 112,)   # flatten
+    assert image_vector.shape == (92 * 112,)
 
     assert label == "upload.png"
 
+def test_get_training_weigths_calculates_correctly(tmp_path):
+    dataset = tmp_path / "dataset"
+    person1 = dataset / "person1"
+    person2 = dataset / "person2"
+    person1.mkdir(parents=True)
+    person2.mkdir(parents=True)
 
+    imgP1_1 = Image.new('L', (2,2), color=10)
+    imgP1_2 = Image.new('L', (2,2), color=20)
+
+    imgP2_1 = Image.new('L', (2,2), color=40)
+    imgP2_2 = Image.new('L', (2,2), color=50)
+
+    imgP1_1.save(person1 / "1.pgm")
+    imgP1_2.save(person1 / "2.pgm")
+
+    imgP2_1.save(person2 / "1.pgm")
+    imgP2_2.save(person2 / "2.pgm")
+
+    mean = np.array([[2],[2],[2],[2]])
+    eigfaces = np.array([
+        [1, 0],
+        [1, 0],
+        [1, 0],
+        [1, 0]
+    ])
+
+    training_weights, labels = get_training_weights(str(dataset), eigfaces, mean)
+    # person1 image 1 keskitetty = [10,10,10,10]-mean = [8,8,8,8]
+    # person2 image 2 keskitetty = [20,20,20,20]-mean = [18,18,18,18]
+    # paino on pistetulo(keskitetty kuva, eigfaces) -> weight1 = [32, 0], weight2 = [72, 0]
+    # keskitetty person2 image 1 ja image 2  = [38,38,38,38] ja [48,48,48,48]
+    # -> p2 weigth1 = [152, 0] weight2 = [192, 0]
+    # p1 keskiarvo = [(32+72) / 2 = 52, 0]
+    # p2 keskiarvo = [(152+192) / 2 = 172, 0]
+
+    assert training_weights[0][0]==52
+    assert training_weights[0][1]==0
+    assert training_weights[1][0]==172
+    assert training_weights[1][1]==0
 
     
 

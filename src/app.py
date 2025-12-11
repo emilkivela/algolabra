@@ -1,7 +1,7 @@
 import os
 import time
 import numpy as np
-from flask import Flask, render_template, request, flash, redirect, url_for
+from flask import Flask, render_template, request
 from src.services.utils import convert_pmg, load_dataset_faces, calculate_treshold
 from src.services.eigenfaces import (calculate_eigenfaces, get_input_weight, 
                                      get_training_weights, recognise_input_face)
