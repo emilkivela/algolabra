@@ -20,11 +20,18 @@ Kokonaisvarianssi $v = (λ_1 + λ_2 + ... + λ_n)$, missä n = kaikkien komponen
 
 Talletamme tällä tavalla saadut ominaiskasvot matriisiin, ja power iteration-algoritmin ansiosta ne ovat valmiiksi suuruusjärjestyksessä ominaisarvon mukaan. Ominaiskasvojen avulla laskemme jokaiselle harjoitusdatasta löytyvälle henkilölle oman painovektorin laskemalla keskiarvon jokaisen henkilön kuvan painovektorin keskiarvon. Ohjelma tunnistaa ihmisen laskemalla syötekuvalle myös painovektorin ja laskemalla minkä henkilön painovektoriin on pienin Euklidinen etäisyys.
 
+
+
+## Parannusehdotukset
+Tällä hetkelle ohjelma ainoastaan tunnistaa onko se nähnyt kasvot aikaisemmin vai ei. Ohjelmaa voisi parantaa, jos se lisäisi ennalta näkemättömän kasvon harjoitussettiin, jolloin ohjelma voisi oppia tunnistamaan myös uusia kasvoja. Tunnistetun ja tunnistamattoman kasvon kynnysarvo on tällä hetkellä myös suhteellisen korkea jotta ohjelma tunnistaisi harjoitussetissä olevat kasvot mahdollisimman usein oikein, mutta se johtaa siihen että myös ennalta näkemättömät kasvot tunnistetaan usein. Kynnysarvo olisi ehkä mahdollista laskea tarkemmin. 
+
+## Laajojen kielimallien käyttö
+Työssä käytettiin ChatGPT:tä käytettiin ehdottamaan toteutusmenetelmiä silloin kun muissa lähteissä tai tekijän ennalta tiedossa olevat menetelmät eivät olleet soveliaita harjoitustyössä. Kaikki käyttöönotetut tekoälyn ehdottamat konseptit ovat etsitty ja tarkistettu myös muista lähteistä. Tekoälyä käytettiin myös virheenetsinnässä.
+
 ## Viitteet
 - [Turk and Pentland, Eigenfaces for Recognition](https://direct.mit.edu/jocn/article/3/1/71/3025/Eigenfaces-for-Recognition)
 - [Eigenface (Wikipedia)](https://en.wikipedia.org/wiki/Eigenface)
 - [Geek for Geeks Eigenface](https://www.geeksforgeeks.org/machine-learning/ml-face-recognition-using-eigenfaces-pca-algorithm/)
 - [Power iteration (Wikipedia)](https://en.wikipedia.org/wiki/Power_iteration)
-- [Rayleigh quotient (Wikipedia)](ps://en.wikipedia.org/wiki/Rayleigh_quotient)
+- [Rayleigh quotient (Wikipedia)](https://en.wikipedia.org/wiki/Rayleigh_quotient)
 - [Computation of matrix eigenvalues and eigenvectors, Oxford lecture slides](https://www.robots.ox.ac.uk/~sjrob/Teaching/EngComp/ecl4.pdf)
-- 
