@@ -20,7 +20,7 @@ def load_dataset_faces(dataset_path):
 
     return T_matrix
 
-def convert_pmg(image_path):
+def convert_pgm(image_path):
     """
     Muuntaa syötetyn kuvan base64-muotoon, jotta se voidaan esittää verkkosivulla riippumatta siitä,
     oliko alkuperäinen kuva .pmg-tiedosto vai ei. Tarkistaa alussa onko syöte polku tiedostoon vai FileObject.

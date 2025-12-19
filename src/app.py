@@ -2,7 +2,7 @@ import os
 import time
 import numpy as np
 from flask import Flask, render_template, request
-from src.services.utils import convert_pmg, load_dataset_faces, calculate_treshold
+from src.services.utils import convert_pgm, load_dataset_faces, calculate_treshold
 from src.services.eigenfaces import (calculate_eigenfaces, get_input_weight, 
                                      get_training_weights, recognise_input_face)
 
@@ -21,7 +21,7 @@ weighttime = time.time()
 
 input_files = []
 for file in os.listdir('./static/images/inputs/'):
-    base64 = convert_pmg('./static/images/inputs/'+file)
+    base64 = convert_pgm('./static/images/inputs/'+file)
     input_files.append(base64)
 end = time.time()
 
@@ -55,7 +55,7 @@ def recognise_face():
         file = request.form["faces"]
         input_face_path = "./static/images/inputs/"+file
 
-    input_image = convert_pmg(input_face_path)
+    input_image = convert_pgm(input_face_path)
     input_image = input_image["base64"]
 
     weight_vector, true_label = get_input_weight(input_face_path, mean, eigenfaces)
@@ -68,7 +68,7 @@ def recognise_face():
     path = './static/images/data/'+guess[1]+'/'
 
     for img in os.listdir(path):
-        converted = convert_pmg(path+img)
+        converted = convert_pgm(path+img)
         guess_pictures.append(converted["base64"])
 
     end = time.time()
